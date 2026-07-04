@@ -4,6 +4,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@nuxt/fonts', 'motion-v/nuxt'],
   css: ['~/assets/css/main.css'],
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/img/cherry-mae-favicon.svg' }
+      ]
+    }
+  },
   fonts: {
     families: [
       { name: 'Fraunces', provider: 'google' },

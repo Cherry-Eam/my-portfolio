@@ -4,9 +4,8 @@
         :class="isScrolled ? 'border-cherry-petal/70 bg-white/90 shadow-sm shadow-cherry-bloom/5' : 'border-transparent bg-white/60'"
     >
         <div class='mx-auto flex max-w-6xl items-center justify-between px-6 py-4'>
-            <a href='#home' class='flex items-center gap-2.5' @click.prevent='onNavClick("#home")'>
-                <img src='/img/cherry-logo.png' alt='Cherry Mae' class='h-10 w-10 rounded-xl object-cover'>
-                <span class='font-display text-lg font-semibold text-cherry-red'>Cherry Mae</span>
+            <a href='#home' class='flex items-center' @click.prevent='onNavClick("#home")'>
+                <img src='/img/cherry-mae-logo.svg' alt='Cherry Mae' class='h-10 w-auto'>
             </a>
 
             <nav class='relative hidden items-center gap-8 md:flex' aria-label='Primary'>

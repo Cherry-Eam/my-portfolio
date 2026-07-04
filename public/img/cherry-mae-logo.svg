@@ -1,0 +1,12 @@
+<svg width="480" height="140" viewBox="0 0 480 140" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4A2545"/>
+      <stop offset="100%" stop-color="#2E1730"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="10" y="25" width="90" height="90" rx="20" fill="url(#badgeGrad)"/>
+  <text x="55" y="87" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-style="italic" fill="#F9C5D5" text-anchor="middle">CM</text>
+  <text x="125" y="90" font-family="'Poppins','Segoe UI',Arial,sans-serif" font-size="48" font-weight="700" fill="#F2789F">Cherry Mae</text>
+</svg>
