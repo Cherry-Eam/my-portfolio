@@ -30,8 +30,8 @@
                         Get in touch
                     </h3>
                     <ul class='mt-7 flex flex-col gap-6'>
-                        <li v-for='detail in details' :key='detail.label' class='flex items-start gap-4'>
-                            <span class='flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-white/15'>
+                        <li v-for='detail in details' :key='detail.label' class='group flex items-start gap-4'>
+                            <span class='flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-white/15 transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/25'>
                                 <MapPinIcon class='h-5 w-5' aria-hidden='true' />
                             </span>
                             <span>
@@ -88,22 +88,38 @@
                         />
                     </label>
 
-                    <button
+                    <Motion
+                        as='button'
                         type='submit'
-                        class='mt-6 w-full rounded-full bg-cherry-red px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-cherry-red/90'
+                        :while-hover='{ scale: 1.02, y: -2 }'
+                        :while-tap='{ scale: 0.97 }'
+                        :transition='{ type: "spring", stiffness: 400, damping: 17 }'
+                        class='mt-6 w-full rounded-full bg-cherry-red px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cherry-red/25'
                     >
                         Send Message
-                    </button>
-
-                    <Motion
-                        v-if='submitted'
-                        :initial='{ opacity: 0, y: 8 }'
-                        :animate='{ opacity: 1, y: 0 }'
-                        class='mt-5 flex items-center gap-2 rounded-xl bg-cherry-blossom p-4 text-sm text-slate-700'
-                    >
-                        <CheckCircleIcon class='h-5 w-5 flex-shrink-0 text-cherry-red' aria-hidden='true' />
-                        Thanks — your message has been noted. I'll get back to you soon.
                     </Motion>
+
+                    <AnimatePresence>
+                        <Motion
+                            v-if='submitted'
+                            :initial='{ opacity: 0, y: 8, scale: 0.95 }'
+                            :animate='{ opacity: 1, y: 0, scale: 1 }'
+                            :exit='{ opacity: 0, y: 8, scale: 0.95 }'
+                            :transition='{ type: "spring", stiffness: 300, damping: 20 }'
+                            class='mt-5 flex items-center gap-2 rounded-xl bg-cherry-blossom p-4 text-sm text-slate-700'
+                        >
+                            <Motion
+                                as='span'
+                                :initial='{ scale: 0 }'
+                                :animate='{ scale: 1 }'
+                                :transition='{ type: "spring", stiffness: 500, damping: 12, delay: 0.1 }'
+                                class='inline-flex'
+                            >
+                                <CheckCircleIcon class='h-5 w-5 flex-shrink-0 text-cherry-red' aria-hidden='true' />
+                            </Motion>
+                            Thanks — your message has been noted. I'll get back to you soon.
+                        </Motion>
+                    </AnimatePresence>
                 </form>
             </div>
         </div>
@@ -112,7 +128,7 @@
 
 <script setup lang='ts'>
 import { reactive, ref } from 'vue'
-import { Motion } from 'motion-v'
+import { Motion, AnimatePresence } from 'motion-v'
 import { MapPinIcon, CheckCircleIcon } from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
 import type { ContactDetail } from '~/types/contact'

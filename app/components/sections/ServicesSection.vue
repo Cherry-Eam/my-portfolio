@@ -31,10 +31,11 @@
                     :initial='{ opacity: 0, y: 24 }'
                     :while-in-view='{ opacity: 1, y: 0 }'
                     :in-view-options='{ once: true }'
+                    :while-hover='{ y: -8 }'
                     :transition='{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }'
-                    class='rounded-2xl border border-cherry-petal bg-white p-6 shadow-sm'
+                    class='group relative overflow-hidden rounded-2xl border border-cherry-petal bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-cherry-bloom/15'
                 >
-                    <div class='flex h-11 w-11 items-center justify-center rounded-xl bg-cherry-blossom'>
+                    <div class='flex h-11 w-11 items-center justify-center rounded-xl bg-cherry-blossom transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110'>
                         <BriefcaseIcon class='h-5 w-5 text-cherry-red' aria-hidden='true' />
                     </div>
                     <h3 class='mt-4 font-display text-lg font-semibold text-slate-950'>
@@ -43,6 +44,7 @@
                     <p class='mt-2 text-sm leading-6 text-slate-600'>
                         {{ service.description }}
                     </p>
+                    <span class='absolute inset-x-6 bottom-0 h-0.5 origin-left scale-x-0 bg-cherry-red transition-transform duration-300 group-hover:scale-x-100' aria-hidden='true' />
                 </Motion>
             </div>
 
@@ -59,11 +61,16 @@
                     <div
                         v-for='item in portfolioItems'
                         :key='item.label'
-                        class='flex aspect-[4/3] flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-cherry-bloom/60 bg-white/60 text-center'
+                        class='group relative flex aspect-[4/3] flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border-2 border-dashed border-cherry-bloom/60 bg-white/60 text-center transition-colors duration-300 hover:border-cherry-red'
                     >
-                        <PhotoIcon class='h-7 w-7 text-cherry-bloom' aria-hidden='true' />
-                        <span class='font-mono text-xs font-semibold text-cherry-red'>{{ item.label }}</span>
-                        <span class='font-mono text-[11px] text-slate-500'>Sample coming soon</span>
+                        <PhotoIcon class='h-7 w-7 text-cherry-bloom transition-transform duration-300 group-hover:scale-0' aria-hidden='true' />
+                        <span class='font-mono text-xs font-semibold text-cherry-red transition-opacity duration-200 group-hover:opacity-0'>{{ item.label }}</span>
+                        <span class='font-mono text-[11px] text-slate-500 transition-opacity duration-200 group-hover:opacity-0'>Sample coming soon</span>
+
+                        <div class='absolute inset-0 flex flex-col items-center justify-center gap-2 bg-cherry-red text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
+                            <ArrowUpRightIcon class='h-6 w-6' aria-hidden='true' />
+                            <span class='font-mono text-xs font-semibold uppercase tracking-widest'>{{ item.label }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -73,7 +80,7 @@
 
 <script setup lang='ts'>
 import { Motion } from 'motion-v'
-import { BriefcaseIcon, PhotoIcon } from '@heroicons/vue/24/outline'
+import { BriefcaseIcon, PhotoIcon, ArrowUpRightIcon } from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
 import type { ServiceItem, PortfolioPlaceholder } from '~/types/service'
 

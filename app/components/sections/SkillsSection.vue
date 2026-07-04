@@ -48,12 +48,27 @@
                     </div>
                 </Motion>
             </div>
+
+            <div class='mt-14 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]'>
+                <div class='flex w-max animate-marquee gap-3 hover:[animation-play-state:paused]'>
+                    <span
+                        v-for='(item, index) in tickerItems'
+                        :key='`${item}-${index}`'
+                        class='flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 font-mono text-xs font-medium text-white'
+                    >
+                        <SparklesIcon class='h-3.5 w-3.5' aria-hidden='true' />
+                        {{ item }}
+                    </span>
+                </div>
+            </div>
         </div>
     </section>
 </template>
 
 <script setup lang='ts'>
+import { computed } from 'vue'
 import { Motion } from 'motion-v'
+import { SparklesIcon } from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
 import type { SkillGroup } from '~/types/skill'
 
@@ -64,7 +79,7 @@ interface Props {
     groups?: SkillGroup[]
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     eyebrow: 'Skills',
     title: 'Placeholder skills headline',
     subtitle: 'Placeholder copy describing key skill areas. Replace with the real skill set later.',
@@ -73,5 +88,10 @@ withDefaults(defineProps<Props>(), {
         { category: 'Category Two', items: ['Skill', 'Skill', 'Skill'] },
         { category: 'Category Three', items: ['Skill', 'Skill', 'Skill'] }
     ]
+})
+
+const tickerItems = computed(() => {
+    const flat = props.groups.flatMap((group) => group.items)
+    return [...flat, ...flat]
 })
 </script>

@@ -21,6 +21,15 @@ export default <Partial<Config>>{
                 display: ['Fraunces', 'serif'],
                 body: ['Inter', 'sans-serif'],
                 mono: ['IBM Plex Mono', 'monospace']
+            },
+            keyframes: {
+                marquee: {
+                    '0%': { transform: 'translateX(0)' },
+                    '100%': { transform: 'translateX(-50%)' }
+                }
+            },
+            animation: {
+                marquee: 'marquee 24s linear infinite'
             }
         }
     }
