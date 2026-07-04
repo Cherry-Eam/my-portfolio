@@ -20,11 +20,44 @@
                     class='relative [transform-style:preserve-3d]'
                 >
                     <div class='absolute -inset-3 -rotate-3 rounded-[2rem] bg-cherry-petal/60' aria-hidden='true' />
-                    <div class='relative aspect-[4/5] w-full rounded-3xl border border-cherry-petal bg-cherry-blossom shadow-lg shadow-cherry-bloom/10'>
-                        <div class='flex h-full w-full flex-col items-center justify-center gap-3 text-cherry-bloom'>
-                            <UserCircleIcon class='h-16 w-16' aria-hidden='true' />
-                            <span class='font-mono text-xs uppercase tracking-widest'>Photo placeholder</span>
+                    <div class='relative flex aspect-[4/5] w-full flex-col rounded-3xl border border-cherry-petal bg-white p-7 shadow-lg shadow-cherry-bloom/10'>
+                        <div class='flex items-center gap-3'>
+                            <div class='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-cherry-blossom font-display text-sm font-semibold text-cherry-red'>
+                                CE
+                            </div>
+                            <div class='min-w-0'>
+                                <p class='truncate font-display text-base font-semibold text-slate-950'>
+                                    Cherry Efondo
+                                </p>
+                                <p class='font-mono text-[10px] uppercase tracking-widest text-slate-500'>
+                                    Virtual Assistant
+                                </p>
+                            </div>
                         </div>
+
+                        <div class='mt-7 flex-1 space-y-5'>
+                            <div v-for='section in resumeSections' :key='section.label' class='space-y-2'>
+                                <div class='h-1.5 w-16 rounded-full bg-cherry-bloom/70' aria-hidden='true' />
+                                <div
+                                    v-for='(width, index) in section.lines'
+                                    :key='index'
+                                    class='h-2 rounded-full bg-cherry-blossom'
+                                    :class='width'
+                                    aria-hidden='true'
+                                />
+                            </div>
+                        </div>
+
+                        <a
+                            :href='resumeHref'
+                            target='_blank'
+                            rel='noopener'
+                            download
+                            class='mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-cherry-red px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-cherry-red/90'
+                        >
+                            <ArrowDownTrayIcon class='h-4 w-4' aria-hidden='true' />
+                            Download Resume
+                        </a>
                     </div>
                     <div class='absolute -bottom-5 -right-5 flex h-16 w-16 rotate-6 items-center justify-center rounded-2xl border border-cherry-petal bg-white font-mono text-[10px] font-semibold uppercase tracking-widest text-cherry-red shadow-md'>
                         Hi!
@@ -64,7 +97,7 @@
 
 <script setup lang='ts'>
 import { Motion } from 'motion-v'
-import { UserCircleIcon } from '@heroicons/vue/24/outline'
+import { ArrowDownTrayIcon } from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
 import StatCounter from '~/components/ui/StatCounter.vue'
 import { useTilt } from '~/composables/useTilt'
@@ -76,6 +109,7 @@ interface Props {
     paragraphs?: string[]
     quote?: string
     stats?: StatItem[]
+    resumeHref?: string
 }
 
 withDefaults(defineProps<Props>(), {
@@ -91,8 +125,15 @@ withDefaults(defineProps<Props>(), {
         { value: 3, suffix: '+', label: 'Years Experience' },
         { value: 9, suffix: '', label: 'Core Services' },
         { value: 5, suffix: '', label: 'Core Values' }
-    ]
+    ],
+    resumeHref: '/resume.pdf'
 })
+
+const resumeSections = [
+    { label: 'Experience', lines: ['w-full', 'w-4/5', 'w-full'] },
+    { label: 'Education', lines: ['w-3/4', 'w-1/2'] },
+    { label: 'Skills', lines: ['w-full', 'w-2/3'] }
+]
 
 const { rotateX, rotateY, onMouseMove, onMouseLeave } = useTilt()
 </script>

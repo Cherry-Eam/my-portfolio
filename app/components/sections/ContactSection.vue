@@ -29,7 +29,7 @@
                     <ul class='mt-7 flex flex-col gap-6'>
                         <li v-for='detail in details' :key='detail.label' class='group flex items-start gap-4'>
                             <span class='flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-white/15 transition-transform duration-300 group-hover:scale-110 group-hover:bg-white/25'>
-                                <MapPinIcon class='h-5 w-5' aria-hidden='true' />
+                                <component :is='iconFor(detail.label)' class='h-5 w-5' aria-hidden='true' />
                             </span>
                             <span>
                                 <span class='block font-mono text-[11px] uppercase tracking-widest text-white/70'>
@@ -160,7 +160,7 @@
 <script setup lang='ts'>
 import { onMounted, reactive, ref } from 'vue'
 import { Motion, AnimatePresence } from 'motion-v'
-import { MapPinIcon, CheckCircleIcon, ExclamationCircleIcon, ArrowPathIcon } from '@heroicons/vue/24/outline'
+import { MapPinIcon, CheckCircleIcon, ExclamationCircleIcon, ArrowPathIcon, PhoneArrowDownLeftIcon, EnvelopeIcon } from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
 import { useServices } from '~/composables/useServices'
 import type { ContactDetail } from '~/types/contact'
@@ -184,6 +184,14 @@ withDefaults(defineProps<Props>(), {
 })
 
 const services = useServices()
+
+const contactIcons: Record<string, typeof MapPinIcon> = {
+    Location: MapPinIcon,
+    Email: EnvelopeIcon,
+    Phone: PhoneArrowDownLeftIcon
+}
+
+const iconFor = (label: string) => contactIcons[label] || MapPinIcon
 
 const form = reactive({ name: '', email: '', message: '' })
 const selectedServices = ref<string[]>([])

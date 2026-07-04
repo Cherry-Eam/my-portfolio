@@ -77,11 +77,8 @@
                 :transition='{ duration: 0.5, ease: "easeOut", delay: 0.15 }'
                 class='relative mx-auto aspect-[4/5] w-full max-w-sm'
             >
-                <div class='h-full w-full rounded-3xl border border-white/80 bg-white/70 shadow-xl shadow-cherry-bloom/10 backdrop-blur-sm'>
-                    <div class='flex h-full w-full flex-col items-center justify-center gap-3 text-cherry-bloom'>
-                        <PhotoIcon class='h-16 w-16' aria-hidden='true' />
-                        <span class='font-mono text-xs uppercase tracking-widest'>Photo placeholder</span>
-                    </div>
+                <div class='h-full w-full overflow-hidden rounded-3xl border border-white/80 shadow-xl shadow-cherry-bloom/10'>
+                    <img :src='photoSrc' :alt='photoAlt' class='h-full w-full object-cover'>
                 </div>
 
                 <Motion
@@ -105,7 +102,7 @@
 <script setup lang='ts'>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { Motion, AnimatePresence } from 'motion-v'
-import { PhotoIcon, CheckCircleIcon } from '@heroicons/vue/24/outline'
+import { CheckCircleIcon } from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
 
 interface Props {
@@ -118,6 +115,8 @@ interface Props {
     secondaryCtaLabel?: string
     secondaryCtaHref?: string
     statusChips?: string[]
+    photoSrc?: string
+    photoAlt?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -129,7 +128,9 @@ const props = withDefaults(defineProps<Props>(), {
     primaryCtaHref: '#contact',
     secondaryCtaLabel: 'View Services',
     secondaryCtaHref: '#services',
-    statusChips: () => ['Calendar synced', 'Invoice sent', 'Post scheduled']
+    statusChips: () => ['Calendar synced', 'Invoice sent', 'Post scheduled'],
+    photoSrc: '/img/cherry/me.jpg',
+    photoAlt: 'Cherry Efondo'
 })
 
 const wordIndex = ref(0)
