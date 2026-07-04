@@ -94,7 +94,7 @@
                                             <span class='font-mono text-[10px] uppercase tracking-widest text-slate-400'>
                                                 Tools &amp; Platforms
                                             </span>
-                                            <div class='mt-2.5 mb-2.5 flex flex-wrap gap-2'>
+                                            <div class='mt-2.5 flex flex-wrap gap-2'>
                                                 <span
                                                     v-for='tool in activeService.tools'
                                                     :key='tool'
@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
 
-                                <div class='mt-auto flex items-center justify-between gap-4 border-t border-cherry-blossom pt-6 sm:ml-24'>
+                                <div class='mt-2.5 flex items-center justify-between gap-4 border-t border-cherry-blossom pt-6 sm:ml-24'>
                                     <span class='font-mono text-[11px] uppercase tracking-widest text-slate-400'>
                                         {{ String(activeIndex + 1).padStart(2, '0') }} / {{ String(services.length).padStart(2, '0') }}
                                     </span>
