@@ -1,6 +1,7 @@
 export interface ServiceItem {
     title: string
-    description: string
+    tagline: string
+    items: string[]
 }
 
 export interface PortfolioPlaceholder {

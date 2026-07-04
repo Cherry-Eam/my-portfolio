@@ -23,93 +23,135 @@
                 </p>
             </Motion>
 
-            <div class='mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-                <Motion
-                    v-for='(service, index) in services'
-                    :key='service.title'
-                    as='article'
-                    :initial='{ opacity: 0, y: 24 }'
-                    :while-in-view='{ opacity: 1, y: 0 }'
-                    :in-view-options='{ once: true }'
-                    :while-hover='{ y: -8 }'
-                    :transition='{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }'
-                    class='group relative overflow-hidden rounded-2xl border border-cherry-petal bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-cherry-bloom/15'
-                >
-                    <div class='flex h-11 w-11 items-center justify-center rounded-xl bg-cherry-blossom transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110'>
-                        <BriefcaseIcon class='h-5 w-5 text-cherry-red' aria-hidden='true' />
-                    </div>
-                    <h3 class='mt-4 font-display text-lg font-semibold text-slate-950'>
-                        {{ service.title }}
-                    </h3>
-                    <p class='mt-2 text-sm leading-6 text-slate-600'>
-                        {{ service.description }}
-                    </p>
-                    <span class='absolute inset-x-6 bottom-0 h-0.5 origin-left scale-x-0 bg-cherry-red transition-transform duration-300 group-hover:scale-x-100' aria-hidden='true' />
-                </Motion>
-            </div>
-
-            <div class='mt-20'>
-                <div class='flex items-baseline justify-between gap-4'>
-                    <h3 class='font-display text-2xl font-semibold text-slate-950'>
-                        Portfolio preview
-                    </h3>
-                    <span class='font-mono text-xs uppercase tracking-widest text-slate-500'>
-                        {{ portfolioNote }}
-                    </span>
-                </div>
-                <div class='mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-                    <div
-                        v-for='item in portfolioItems'
-                        :key='item.label'
-                        class='group relative flex aspect-[4/3] flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border-2 border-dashed border-cherry-bloom/60 bg-white/60 text-center transition-colors duration-300 hover:border-cherry-red'
-                    >
-                        <PhotoIcon class='h-7 w-7 text-cherry-bloom transition-transform duration-300 group-hover:scale-0' aria-hidden='true' />
-                        <span class='font-mono text-xs font-semibold text-cherry-red transition-opacity duration-200 group-hover:opacity-0'>{{ item.label }}</span>
-                        <span class='font-mono text-[11px] text-slate-500 transition-opacity duration-200 group-hover:opacity-0'>Sample coming soon</span>
-
-                        <div class='absolute inset-0 flex flex-col items-center justify-center gap-2 bg-cherry-red text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100'>
-                            <ArrowUpRightIcon class='h-6 w-6' aria-hidden='true' />
-                            <span class='font-mono text-xs font-semibold uppercase tracking-widest'>{{ item.label }}</span>
+            <Motion
+                as='div'
+                :initial='{ opacity: 0, y: 24 }'
+                :while-in-view='{ opacity: 1, y: 0 }'
+                :in-view-options='{ once: true }'
+                :transition='{ duration: 0.5, ease: "easeOut", delay: 0.1 }'
+                class='mt-14'
+            >
+                <div class='relative'>
+                    <div class='overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
+                        <div class='flex w-max gap-x-1 border-b border-cherry-petal' role='tablist' aria-label='Services'>
+                            <button
+                                v-for='(service, index) in services'
+                                :key='service.title'
+                                type='button'
+                                role='tab'
+                                :aria-selected='index === activeIndex'
+                                class='relative -mb-px shrink-0 rounded-t-lg border border-b-0 px-5 py-3 font-mono text-xs font-medium tracking-wide transition-colors duration-200'
+                                :class="index === activeIndex
+                                    ? 'z-10 border-cherry-petal bg-white text-cherry-red'
+                                    : 'border-transparent bg-cherry-blossom/70 text-slate-500 hover:border-cherry-petal/60 hover:text-slate-700'"
+                                @click='activeIndex = index'
+                            >
+                                {{ String(index + 1).padStart(2, '0') }} &middot; {{ service.title }}
+                            </button>
                         </div>
                     </div>
+                    <div class='pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent' aria-hidden='true' />
                 </div>
-            </div>
+
+                <div class='relative'>
+                    <div class='pointer-events-none absolute inset-x-5 -bottom-2.5 h-10 rounded-b-3xl bg-cherry-petal/50' aria-hidden='true' />
+                    <div class='pointer-events-none absolute inset-x-10 -bottom-5 h-10 rounded-b-3xl bg-cherry-blossom/70' aria-hidden='true' />
+
+                    <div class='relative min-h-[26rem] rounded-b-3xl rounded-tr-3xl border border-cherry-petal bg-white p-8 shadow-xl shadow-cherry-bloom/10 sm:p-12'>
+                        <AnimatePresence mode='wait'>
+                            <Motion
+                                :key='activeIndex'
+                                as='div'
+                                :initial='{ opacity: 0, y: 12 }'
+                                :animate='{ opacity: 1, y: 0 }'
+                                :exit='{ opacity: 0, y: -12 }'
+                                :transition='{ duration: 0.3, ease: "easeOut" }'
+                                class='flex h-full flex-col'
+                            >
+                                <div class='grid gap-8 sm:grid-cols-[auto_1fr]'>
+                                    <div class='flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-cherry-blossom'>
+                                        <component :is='icons[activeIndex % icons.length]' class='h-7 w-7 text-cherry-red' aria-hidden='true' />
+                                    </div>
+                                    <div>
+                                        <h3 class='font-display text-2xl font-semibold text-slate-950'>
+                                            {{ activeService.title }}
+                                        </h3>
+                                        <p class='mt-2 text-sm text-slate-500'>
+                                            {{ activeService.tagline }}
+                                        </p>
+                                        <ul class='mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2'>
+                                            <li
+                                                v-for='item in activeService.items'
+                                                :key='item'
+                                                class='flex items-center gap-2.5 text-sm text-slate-600'
+                                            >
+                                                <span class='h-1.5 w-1.5 flex-shrink-0 rounded-full bg-cherry-bloom' aria-hidden='true' />
+                                                {{ item }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class='mt-auto flex items-center justify-between gap-4 border-t border-cherry-blossom pt-6 sm:ml-24'>
+                                    <span class='font-mono text-[11px] uppercase tracking-widest text-slate-400'>
+                                        {{ String(activeIndex + 1).padStart(2, '0') }} / {{ String(services.length).padStart(2, '0') }}
+                                    </span>
+                                    <a
+                                        href='#contact'
+                                        class='group inline-flex items-center gap-1.5 text-sm font-semibold text-cherry-red'
+                                    >
+                                        Interested in this service?
+                                        <ArrowRightIcon class='h-4 w-4 transition-transform duration-200 group-hover:translate-x-1' aria-hidden='true' />
+                                    </a>
+                                </div>
+                            </Motion>
+                        </AnimatePresence>
+                    </div>
+                </div>
+            </Motion>
         </div>
     </section>
 </template>
 
 <script setup lang='ts'>
-import { Motion } from 'motion-v'
-import { BriefcaseIcon, PhotoIcon, ArrowUpRightIcon } from '@heroicons/vue/24/outline'
+import { computed, ref } from 'vue'
+import { Motion, AnimatePresence } from 'motion-v'
+import {
+    ArrowRightIcon,
+    CalendarDaysIcon,
+    ClipboardDocumentListIcon,
+    BanknotesIcon,
+    PencilSquareIcon,
+    MegaphoneIcon,
+    FilmIcon,
+    UserGroupIcon
+} from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
-import type { ServiceItem, PortfolioPlaceholder } from '~/types/service'
+import type { ServiceItem } from '~/types/service'
 
 interface Props {
     eyebrow?: string
     title?: string
     subtitle?: string
     services?: ServiceItem[]
-    portfolioNote?: string
-    portfolioItems?: PortfolioPlaceholder[]
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     eyebrow: 'Services',
     title: 'Placeholder services headline',
     subtitle: 'Placeholder copy describing the range of services offered. Replace with real service details later.',
     services: () => [
-        { title: 'Service One', description: 'Placeholder description of this service offering.' },
-        { title: 'Service Two', description: 'Placeholder description of this service offering.' },
-        { title: 'Service Three', description: 'Placeholder description of this service offering.' },
-        { title: 'Service Four', description: 'Placeholder description of this service offering.' },
-        { title: 'Service Five', description: 'Placeholder description of this service offering.' },
-        { title: 'Service Six', description: 'Placeholder description of this service offering.' }
-    ],
-    portfolioNote: 'Details to be added',
-    portfolioItems: () => [
-        { label: 'Project One' },
-        { label: 'Project Two' },
-        { label: 'Project Three' }
+        { title: 'Service One', tagline: 'Placeholder tagline for this service.', items: ['Placeholder task', 'Placeholder task', 'Placeholder task', 'Placeholder task'] },
+        { title: 'Service Two', tagline: 'Placeholder tagline for this service.', items: ['Placeholder task', 'Placeholder task', 'Placeholder task', 'Placeholder task'] },
+        { title: 'Service Three', tagline: 'Placeholder tagline for this service.', items: ['Placeholder task', 'Placeholder task', 'Placeholder task', 'Placeholder task'] },
+        { title: 'Service Four', tagline: 'Placeholder tagline for this service.', items: ['Placeholder task', 'Placeholder task', 'Placeholder task', 'Placeholder task'] },
+        { title: 'Service Five', tagline: 'Placeholder tagline for this service.', items: ['Placeholder task', 'Placeholder task', 'Placeholder task', 'Placeholder task'] },
+        { title: 'Service Six', tagline: 'Placeholder tagline for this service.', items: ['Placeholder task', 'Placeholder task', 'Placeholder task', 'Placeholder task'] },
+        { title: 'Service Seven', tagline: 'Placeholder tagline for this service.', items: ['Placeholder task', 'Placeholder task', 'Placeholder task', 'Placeholder task'] }
     ]
 })
+
+const icons = [CalendarDaysIcon, ClipboardDocumentListIcon, BanknotesIcon, PencilSquareIcon, MegaphoneIcon, FilmIcon, UserGroupIcon]
+const activeIndex = ref(0)
+const activeService = computed(() => props.services[activeIndex.value] ?? props.services[0]!)
 </script>
