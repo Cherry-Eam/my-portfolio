@@ -1,6 +1,11 @@
 <template>
-    <section id='services' class='bg-cherry-blossom py-24'>
-        <div class='mx-auto max-w-6xl px-6'>
+    <section id='services' class='relative overflow-hidden bg-white py-24'>
+        <div
+            class='pointer-events-none absolute inset-0 opacity-70 [background-image:linear-gradient(theme(colors.cherry.petal/60%)_1px,transparent_1px),linear-gradient(90deg,theme(colors.cherry.petal/60%)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]'
+            aria-hidden='true'
+        />
+
+        <div class='relative mx-auto max-w-6xl px-6'>
             <Motion
                 as='div'
                 :initial='{ opacity: 0, y: 24 }'

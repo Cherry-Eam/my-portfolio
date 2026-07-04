@@ -1,6 +1,12 @@
 <template>
-    <section id='contact' class='bg-cherry-blossom py-24'>
-        <div class='mx-auto max-w-6xl px-6'>
+    <section id='contact' class='relative overflow-hidden bg-white py-24'>
+        <div class='pointer-events-none absolute inset-0'>
+            <div class='absolute inset-0 bg-gradient-to-tl from-cherry-blossom via-white to-cherry-petal/40' />
+            <div class='absolute -bottom-32 right-[-8%] h-[24rem] w-[24rem] rounded-full bg-cherry-bloom/25 blur-3xl' />
+            <div class='absolute -top-24 left-[-8%] h-[22rem] w-[22rem] rounded-full bg-cherry-red/15 blur-3xl' />
+        </div>
+
+        <div class='relative mx-auto max-w-6xl px-6'>
             <Motion
                 as='div'
                 :initial='{ opacity: 0, y: 24 }'

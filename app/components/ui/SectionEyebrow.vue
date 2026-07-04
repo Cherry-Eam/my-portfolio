@@ -1,5 +1,8 @@
 <template>
-    <span class='inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest text-cherry-red'>
+    <span
+        class='inline-flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-widest'
+        :class="tone === 'inverted' ? 'text-white' : 'text-cherry-red'"
+    >
         <span class='h-px w-5 bg-current' aria-hidden='true' />
         {{ label }}
     </span>
@@ -8,7 +11,10 @@
 <script setup lang='ts'>
 interface Props {
     label: string
+    tone?: 'default' | 'inverted'
 }
 
-defineProps<Props>()
+withDefaults(defineProps<Props>(), {
+    tone: 'default'
+})
 </script>

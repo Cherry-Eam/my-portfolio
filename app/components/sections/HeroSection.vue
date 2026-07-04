@@ -1,6 +1,13 @@
 <template>
-    <section id='home' class='bg-cherry-blossom pb-20 pt-40'>
-        <div class='mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[1.05fr_0.95fr]'>
+    <section id='home' class='relative overflow-hidden bg-white pb-20 pt-40'>
+        <div class='pointer-events-none absolute inset-0'>
+            <div class='absolute inset-0 bg-gradient-to-br from-cherry-blossom via-white to-cherry-petal/50' />
+            <div class='absolute inset-0 opacity-60 [background-image:radial-gradient(circle_at_1px_1px,theme(colors.cherry.bloom/30%)_1px,transparent_0)] [background-size:32px_32px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]' />
+            <div class='absolute -top-32 right-[-8%] h-[26rem] w-[26rem] rounded-full bg-cherry-red/20 blur-3xl' />
+            <div class='absolute -bottom-40 left-[-10%] h-[26rem] w-[26rem] rounded-full bg-cherry-bloom/25 blur-3xl' />
+        </div>
+
+        <div class='relative z-10 mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[1.05fr_0.95fr]'>
             <Motion
                 as='div'
                 :initial='{ opacity: 0, y: 24 }'
@@ -36,7 +43,7 @@
                 :initial='{ opacity: 0, scale: 0.96 }'
                 :animate='{ opacity: 1, scale: 1 }'
                 :transition='{ duration: 0.5, ease: "easeOut", delay: 0.15 }'
-                class='mx-auto aspect-[4/5] w-full max-w-sm rounded-3xl border border-cherry-petal bg-white/60 shadow-sm'
+                class='mx-auto aspect-[4/5] w-full max-w-sm rounded-3xl border border-white/80 bg-white/70 shadow-xl shadow-cherry-bloom/10 backdrop-blur-sm'
             >
                 <div class='flex h-full w-full flex-col items-center justify-center gap-3 text-cherry-bloom'>
                     <PhotoIcon class='h-16 w-16' aria-hidden='true' />

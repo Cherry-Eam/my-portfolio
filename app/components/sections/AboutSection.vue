@@ -1,17 +1,25 @@
 <template>
-    <section id='about' class='bg-white py-24'>
-        <div class='mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[0.8fr_1.2fr]'>
+    <section id='about' class='relative overflow-hidden bg-white py-24'>
+        <div class='pointer-events-none absolute -left-24 top-10 h-72 w-72 rotate-12 rounded-[3rem] bg-cherry-blossom/70 blur-2xl' aria-hidden='true' />
+
+        <div class='relative mx-auto grid max-w-6xl items-center gap-16 px-6 lg:grid-cols-[0.8fr_1.2fr]'>
             <Motion
                 as='div'
                 :initial='{ opacity: 0, y: 24 }'
                 :while-in-view='{ opacity: 1, y: 0 }'
                 :in-view-options='{ once: true }'
                 :transition='{ duration: 0.5, ease: "easeOut" }'
-                class='mx-auto aspect-[4/5] w-full max-w-sm rounded-3xl border border-cherry-petal bg-cherry-blossom'
+                class='relative mx-auto w-full max-w-sm'
             >
-                <div class='flex h-full w-full flex-col items-center justify-center gap-3 text-cherry-bloom'>
-                    <UserCircleIcon class='h-16 w-16' aria-hidden='true' />
-                    <span class='font-mono text-xs uppercase tracking-widest'>Photo placeholder</span>
+                <div class='absolute -inset-3 -rotate-3 rounded-[2rem] bg-cherry-petal/60' aria-hidden='true' />
+                <div class='relative aspect-[4/5] w-full rounded-3xl border border-cherry-petal bg-cherry-blossom shadow-lg shadow-cherry-bloom/10'>
+                    <div class='flex h-full w-full flex-col items-center justify-center gap-3 text-cherry-bloom'>
+                        <UserCircleIcon class='h-16 w-16' aria-hidden='true' />
+                        <span class='font-mono text-xs uppercase tracking-widest'>Photo placeholder</span>
+                    </div>
+                </div>
+                <div class='absolute -bottom-5 -right-5 flex h-16 w-16 rotate-6 items-center justify-center rounded-2xl border border-cherry-petal bg-white font-mono text-[10px] font-semibold uppercase tracking-widest text-cherry-red shadow-md'>
+                    Hi!
                 </div>
             </Motion>
 
