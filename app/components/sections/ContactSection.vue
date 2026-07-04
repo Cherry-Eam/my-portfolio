@@ -1,9 +1,6 @@
 <template>
     <section id='contact' class='relative overflow-hidden bg-white py-24'>
         <div class='pointer-events-none absolute inset-0'>
-            <div class='absolute inset-0 bg-gradient-to-tl from-cherry-blossom via-white to-cherry-petal/40' />
-            <div class='absolute -bottom-32 right-[-8%] h-[24rem] w-[24rem] rounded-full bg-cherry-bloom/25 blur-3xl' />
-            <div class='absolute -top-24 left-[-8%] h-[22rem] w-[22rem] rounded-full bg-cherry-red/15 blur-3xl' />
         </div>
 
         <div class='relative mx-auto max-w-6xl px-6'>
@@ -77,6 +74,26 @@
                         </label>
                     </div>
 
+                    <div class='mt-5 flex flex-col gap-2.5'>
+                        <span class='font-mono text-[11px] uppercase tracking-widest text-slate-500'>
+                            Interested in <span class='normal-case text-slate-400'>(optional)</span>
+                        </span>
+                        <div class='flex flex-wrap gap-2'>
+                            <button
+                                v-for='service in services'
+                                :key='service.slug'
+                                type='button'
+                                class='rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors duration-200'
+                                :class="selectedServices.includes(service.slug)
+                                    ? 'border-cherry-red bg-cherry-red text-white'
+                                    : 'border-cherry-petal bg-cherry-blossom/40 text-slate-600 hover:border-cherry-bloom hover:text-slate-800'"
+                                @click='toggleService(service.slug)'
+                            >
+                                {{ service.title }}
+                            </button>
+                        </div>
+                    </div>
+
                     <label class='mt-5 flex flex-col gap-2'>
                         <span class='font-mono text-[11px] uppercase tracking-widest text-slate-500'>Message</span>
                         <textarea
@@ -127,10 +144,11 @@
 </template>
 
 <script setup lang='ts'>
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { Motion, AnimatePresence } from 'motion-v'
 import { MapPinIcon, CheckCircleIcon } from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
+import { useServices } from '~/composables/useServices'
 import type { ContactDetail } from '~/types/contact'
 
 interface Props {
@@ -146,18 +164,36 @@ withDefaults(defineProps<Props>(), {
     subtitle: "I'm always excited to help businesses become more organized and efficient. If you're looking for a dependable Virtual Assistant, I'd love to connect.",
     details: () => [
         { label: 'Location', value: 'Davao City, Philippines' },
-        { label: 'Email', value: 'placeholder@example.com', href: 'mailto:placeholder@example.com' },
-        { label: 'Phone', value: '+00 000 000 0000' }
+        { label: 'Email', value: 'efondocherryeam@gmail.com', href: 'mailto:efondocherryeam@gmail.com' },
+        { label: 'Phone', value: '+63 963 942 5936' }
     ]
 })
 
+const services = useServices()
+
 const form = reactive({ name: '', email: '', message: '' })
 const submitted = ref(false)
+const selectedServices = ref<string[]>([])
+
+const toggleService = (slug: string) => {
+    selectedServices.value = selectedServices.value.includes(slug)
+        ? selectedServices.value.filter((item) => item !== slug)
+        : [...selectedServices.value, slug]
+}
 
 const onSubmit = () => {
     submitted.value = true
     form.name = ''
     form.email = ''
     form.message = ''
+    selectedServices.value = []
 }
+
+onMounted(() => {
+    const requested = useRoute().query.service
+    const slug = Array.isArray(requested) ? requested[0] : requested
+    if (slug && services.some((service) => service.slug === slug)) {
+        selectedServices.value = [slug]
+    }
+})
 </script>

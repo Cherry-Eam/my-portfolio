@@ -7,6 +7,7 @@ export interface ServiceCaseStudy {
 
 export interface ServiceItem {
     title: string
+    slug: string
     tagline: string
     items: string[]
     tools?: string[]
