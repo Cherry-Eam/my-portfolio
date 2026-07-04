@@ -43,7 +43,7 @@ export const useServices = (): ServiceItem[] => [
         slug: 'digital-marketing-specialist',
         tagline: 'I help businesses grow through strategic digital marketing campaigns focused on attracting, nurturing, and converting customers using multiple online channels.',
         items: ['Marketing Strategy', 'Lead Generation', 'Analytics Reporting', 'Competitor Analysis', 'Campaign Planning', 'Marketing Automation', 'CRM Management'],
-        tools: ['Google Analytics', 'Google Search Console', 'Meta Ads Manager', 'Canva', 'GoHighLevel'],
+        tools: ['Meta Ads Manager', 'Canva', 'GoHighLevel'],
         caseStudy: {
             title: 'Built an Integrated Marketing Workflow',
             challenge: 'The business had multiple marketing tools but no streamlined process.',
@@ -95,7 +95,7 @@ export const useServices = (): ServiceItem[] => [
         slug: 'video-editing-graphic-design',
         tagline: 'I create professional visual content that helps brands communicate effectively across social media, websites, advertisements, and marketing campaigns.',
         items: ['Short-form Videos', 'Reels & TikTok Videos', 'YouTube Shorts', 'Promotional Videos', 'Motion Graphics', 'Social Media Posts', 'Banners & Flyers', 'Presentations & Pitch Decks', 'Brand Templates', 'Infographics'],
-        tools: ['Canva Pro', 'CapCut', 'Adobe Premiere Pro', 'Adobe Photoshop', 'Adobe Illustrator'],
+        tools: ['Canva Pro', 'CapCut', 'Adobe Photoshop'],
         caseStudy: {
             title: 'Developed Consistent Visual Branding',
             challenge: 'The client lacked cohesive branding across marketing materials.',

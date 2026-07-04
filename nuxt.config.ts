@@ -10,5 +10,13 @@ export default defineNuxtConfig({
       { name: 'Inter', provider: 'google' },
       { name: 'IBM Plex Mono', provider: 'google' }
     ]
+  },
+  runtimeConfig: {
+    smtpHost: '',
+    smtpPort: 587,
+    smtpUser: '',
+    smtpPass: '',
+    contactToEmail: '',
+    contactFromEmail: ''
   }
 })

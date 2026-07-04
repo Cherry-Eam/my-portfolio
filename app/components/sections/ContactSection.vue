@@ -108,17 +108,19 @@
                     <Motion
                         as='button'
                         type='submit'
-                        :while-hover='{ scale: 1.02, y: -2 }'
-                        :while-tap='{ scale: 0.97 }'
+                        :disabled='status === "sending"'
+                        :while-hover='status === "sending" ? {} : { scale: 1.02, y: -2 }'
+                        :while-tap='status === "sending" ? {} : { scale: 0.97 }'
                         :transition='{ type: "spring", stiffness: 400, damping: 17 }'
-                        class='mt-6 w-full rounded-full bg-cherry-red px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cherry-red/25'
+                        class='mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-cherry-red px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-cherry-red/25 disabled:opacity-70'
                     >
-                        Send Message
+                        <ArrowPathIcon v-if='status === "sending"' class='h-4 w-4 animate-spin' aria-hidden='true' />
+                        {{ status === 'sending' ? 'Sending...' : 'Send Message' }}
                     </Motion>
 
                     <AnimatePresence>
                         <Motion
-                            v-if='submitted'
+                            v-if='status === "success"'
                             :initial='{ opacity: 0, y: 8, scale: 0.95 }'
                             :animate='{ opacity: 1, y: 0, scale: 1 }'
                             :exit='{ opacity: 0, y: 8, scale: 0.95 }'
@@ -134,7 +136,19 @@
                             >
                                 <CheckCircleIcon class='h-5 w-5 flex-shrink-0 text-cherry-red' aria-hidden='true' />
                             </Motion>
-                            Thanks — your message has been noted. I'll get back to you soon.
+                            Thanks — your message has been sent. I'll get back to you soon.
+                        </Motion>
+
+                        <Motion
+                            v-else-if='status === "error"'
+                            :initial='{ opacity: 0, y: 8, scale: 0.95 }'
+                            :animate='{ opacity: 1, y: 0, scale: 1 }'
+                            :exit='{ opacity: 0, y: 8, scale: 0.95 }'
+                            :transition='{ type: "spring", stiffness: 300, damping: 20 }'
+                            class='mt-5 flex items-center gap-2 rounded-xl bg-red-50 p-4 text-sm text-red-700'
+                        >
+                            <ExclamationCircleIcon class='h-5 w-5 flex-shrink-0' aria-hidden='true' />
+                            {{ errorMessage }}
                         </Motion>
                     </AnimatePresence>
                 </form>
@@ -146,7 +160,7 @@
 <script setup lang='ts'>
 import { onMounted, reactive, ref } from 'vue'
 import { Motion, AnimatePresence } from 'motion-v'
-import { MapPinIcon, CheckCircleIcon } from '@heroicons/vue/24/outline'
+import { MapPinIcon, CheckCircleIcon, ExclamationCircleIcon, ArrowPathIcon } from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
 import { useServices } from '~/composables/useServices'
 import type { ContactDetail } from '~/types/contact'
@@ -172,8 +186,9 @@ withDefaults(defineProps<Props>(), {
 const services = useServices()
 
 const form = reactive({ name: '', email: '', message: '' })
-const submitted = ref(false)
 const selectedServices = ref<string[]>([])
+const status = ref<'idle' | 'sending' | 'success' | 'error'>('idle')
+const errorMessage = ref('')
 
 const toggleService = (slug: string) => {
     selectedServices.value = selectedServices.value.includes(slug)
@@ -181,12 +196,35 @@ const toggleService = (slug: string) => {
         : [...selectedServices.value, slug]
 }
 
-const onSubmit = () => {
-    submitted.value = true
-    form.name = ''
-    form.email = ''
-    form.message = ''
-    selectedServices.value = []
+const onSubmit = async () => {
+    status.value = 'sending'
+    errorMessage.value = ''
+
+    const serviceTitles = services
+        .filter((service) => selectedServices.value.includes(service.slug))
+        .map((service) => service.title)
+
+    try {
+        await $fetch('/api/contact', {
+            method: 'POST',
+            body: {
+                name: form.name,
+                email: form.email,
+                message: form.message,
+                services: serviceTitles
+            }
+        })
+
+        status.value = 'success'
+        form.name = ''
+        form.email = ''
+        form.message = ''
+        selectedServices.value = []
+    } catch (error) {
+        status.value = 'error'
+        const fetchError = error as { data?: { statusMessage?: string } }
+        errorMessage.value = fetchError.data?.statusMessage || 'Something went wrong. Please try again or email me directly.'
+    }
 }
 
 onMounted(() => {
