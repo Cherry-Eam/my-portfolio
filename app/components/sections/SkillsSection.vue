@@ -23,7 +23,7 @@
                 </p>
             </Motion>
 
-            <div class='mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3'>
+            <div class='mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4'>
                 <Motion
                     v-for='(group, index) in groups'
                     :key='group.category'
@@ -80,13 +80,14 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    eyebrow: 'Skills',
-    title: 'Placeholder skills headline',
-    subtitle: 'Placeholder copy describing key skill areas. Replace with the real skill set later.',
+    eyebrow: 'Tools & Platforms',
+    title: 'What I work with daily',
+    subtitle: 'A snapshot of the software and platforms I use to keep operations, marketing, and communication running smoothly.',
     groups: () => [
-        { category: 'Category One', items: ['Skill', 'Skill', 'Skill'] },
-        { category: 'Category Two', items: ['Skill', 'Skill', 'Skill'] },
-        { category: 'Category Three', items: ['Skill', 'Skill', 'Skill'] }
+        { category: 'Productivity', items: ['Google Workspace', 'Microsoft Office', 'Slack', 'Zoom', 'Calendly'] },
+        { category: 'AI & Automation', items: ['ChatGPT', 'Claude AI', 'GoHighLevel'] },
+        { category: 'Design & Video', items: ['Canva Pro', 'CapCut', 'Adobe Premiere Pro', 'Adobe Photoshop', 'Adobe Illustrator'] },
+        { category: 'Marketing & Finance', items: ['Google Analytics', 'Meta Ads Manager', 'Meta Business Suite', 'QuickBooks', 'Mailchimp'] }
     ]
 })
 

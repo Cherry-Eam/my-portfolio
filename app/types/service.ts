@@ -1,9 +1,14 @@
+export interface ServiceCaseStudy {
+    title: string
+    challenge: string
+    solution: string
+    results: string[]
+}
+
 export interface ServiceItem {
     title: string
     tagline: string
     items: string[]
-}
-
-export interface PortfolioPlaceholder {
-    label: string
+    tools?: string[]
+    caseStudy?: ServiceCaseStudy
 }

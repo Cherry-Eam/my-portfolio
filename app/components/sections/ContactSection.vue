@@ -143,9 +143,9 @@ interface Props {
 withDefaults(defineProps<Props>(), {
     eyebrow: 'Contact',
     title: "Let's work together",
-    subtitle: 'Placeholder copy inviting visitors to reach out. Replace with the real pitch later.',
+    subtitle: "I'm always excited to help businesses become more organized and efficient. If you're looking for a dependable Virtual Assistant, I'd love to connect.",
     details: () => [
-        { label: 'Location', value: 'Placeholder location' },
+        { label: 'Location', value: 'Davao City, Philippines' },
         { label: 'Email', value: 'placeholder@example.com', href: 'mailto:placeholder@example.com' },
         { label: 'Phone', value: '+00 000 000 0000' }
     ]

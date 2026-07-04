@@ -121,15 +121,15 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    eyebrow: 'Placeholder tagline',
-    title: 'A bold headline goes',
-    highlightWords: () => ['right here.', 'like this.', 'for you.'],
-    subtitle: 'Placeholder subtitle copy describing the offer. Replace with real messaging once content is ready.',
-    primaryCtaLabel: 'Primary Action',
+    eyebrow: 'Virtual Assistant · Business Support',
+    title: 'Your next virtual assistant,',
+    highlightWords: () => ['reliable.', 'organized.', 'proactive.'],
+    subtitle: 'I help entrepreneurs and growing businesses streamline operations, manage day-to-day tasks, and reclaim their time — so they can focus on what matters most.',
+    primaryCtaLabel: 'Hire Me',
     primaryCtaHref: '#contact',
-    secondaryCtaLabel: 'Secondary Action',
+    secondaryCtaLabel: 'View Services',
     secondaryCtaHref: '#services',
-    statusChips: () => ['Placeholder update', 'Task completed', 'Message sent']
+    statusChips: () => ['Calendar synced', 'Invoice sent', 'Post scheduled']
 })
 
 const wordIndex = ref(0)

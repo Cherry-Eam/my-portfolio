@@ -79,17 +79,18 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-    eyebrow: 'About',
-    title: 'Placeholder section title',
+    eyebrow: 'About Me',
+    title: "Hi, I'm Cherry Efondo",
     paragraphs: () => [
-        'Placeholder paragraph introducing the person or business. Real bio content will replace this once provided.',
-        'A second placeholder paragraph can expand on experience, focus areas, or approach.'
+        'A dedicated and results-driven Virtual Assistant based in Davao City, Philippines. With over three years of professional experience, I have partnered with entrepreneurs, executives, agencies, and growing businesses to streamline operations, improve productivity, and support business growth.',
+        "I graduated Cum Laude with a Bachelor of Secondary Education, Major in English — a distinction that reflects my commitment to excellence, discipline, and effective communication, and equips me to manage complex administrative tasks and adapt quickly to the evolving needs of modern businesses.",
+        'My goal is simple: to help business owners reclaim their time by handling the day-to-day operations that keep their businesses running smoothly — as a dependable partner who anticipates needs, solves problems proactively, and contributes to long-term success.'
     ],
-    quote: 'Placeholder pull-quote goes here — a short line that captures the value proposition.',
+    quote: "Let's work together to build smarter systems, stronger operations, and lasting success.",
     stats: () => [
-        { value: 3, suffix: '+', label: 'Placeholder stat' },
-        { value: 50, suffix: '+', label: 'Placeholder stat' },
-        { value: 100, suffix: '%', label: 'Placeholder stat' }
+        { value: 3, suffix: '+', label: 'Years Experience' },
+        { value: 9, suffix: '', label: 'Core Services' },
+        { value: 5, suffix: '', label: 'Core Values' }
     ]
 })
 
