@@ -37,6 +37,7 @@
                     @mouseleave='isHireHovered = false'
                 >
                     <FallingPetals :active='isHireHovered' />
+                    <PetalBurst :burst-count='hireBurstCount' />
                     <Motion
                         as='a'
                         href='#contact'
@@ -44,7 +45,7 @@
                         :while-tap='{ scale: 0.96 }'
                         :transition='{ type: "spring", stiffness: 400, damping: 17 }'
                         class='inline-flex items-center rounded-full bg-cherry-red px-5 py-2 text-sm font-semibold text-white shadow-md shadow-cherry-red/20'
-                        @click='onNavClick("#contact")'
+                        @click='onHireClick'
                     >
                         Hire Me
                     </Motion>
@@ -102,12 +103,14 @@ import { useNavigation } from '~/composables/useNavigation'
 import { useActiveSection } from '~/composables/useActiveSection'
 import { useSmoothScrollTo } from '~/composables/useSmoothScrollTo'
 import FallingPetals from '~/components/ui/FallingPetals.vue'
+import PetalBurst from '~/components/ui/PetalBurst.vue'
 
 const { links } = useNavigation()
 const isOpen = ref(false)
 const hoveredHref = ref<string | null>(null)
 const isScrolled = ref(false)
 const isHireHovered = ref(false)
+const hireBurstCount = ref(0)
 
 const activeId = useActiveSection(links.map((link) => link.href.replace('#', '')))
 const { scrollToHash } = useSmoothScrollTo()
@@ -120,6 +123,11 @@ const isActive = (href: string) => {
 const onNavClick = (href: string, closeMenu = false) => {
     scrollToHash(href)
     if (closeMenu) isOpen.value = false
+}
+
+const onHireClick = () => {
+    hireBurstCount.value += 1
+    onNavClick('#contact')
 }
 
 const onScroll = () => {

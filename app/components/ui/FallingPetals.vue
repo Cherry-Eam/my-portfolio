@@ -1,14 +1,14 @@
 <template>
-    <div class='pointer-events-none absolute inset-x-0 top-0 -bottom-16 overflow-visible' aria-hidden='true'>
+    <div class='pointer-events-none absolute inset-x-0 top-full h-16 overflow-visible' aria-hidden='true'>
         <AnimatePresence>
             <Motion
                 v-for='petal in visiblePetals'
                 :key='petal.id'
                 as='span'
                 :initial='{ y: 0, opacity: 0, rotate: petal.rotate }'
-                :animate='{ y: 80, opacity: [0, 1, 1, 0], rotate: petal.rotate + 80 }'
+                :animate='{ y: 64, opacity: [0, 1, 1, 0], rotate: petal.rotate + 80 }'
                 :transition='{ duration: petal.duration, delay: petal.delay, repeat: Infinity, ease: "easeIn" }'
-                class='absolute top-full h-2.5 w-2 rounded-t-full rounded-bl-full'
+                class='absolute top-0 h-2.5 w-2 rounded-t-full rounded-bl-full'
                 :class='petal.color'
                 :style='{ left: petal.left }'
             />

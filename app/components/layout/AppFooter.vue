@@ -58,8 +58,8 @@ const siLinkedin = {
 }
 
 const socialLinks = [
-    { label: 'Instagram', href: '#', icon: siInstagram },
-    { label: 'Facebook', href: '#', icon: siFacebook },
+    { label: 'Instagram', href: 'https://www.instagram.com/chiyriblossom?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==', icon: siInstagram },
+    { label: 'Facebook', href: 'https://www.facebook.com/cherrymae.ronquilloefondo', icon: siFacebook },
     { label: 'LinkedIn', href: '#', icon: siLinkedin }
 ]
 
