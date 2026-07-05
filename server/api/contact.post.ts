@@ -24,27 +24,33 @@ export default defineEventHandler(async (event) => {
 
     const config = useRuntimeConfig()
 
-    if (!config.smtpHost || !config.smtpUser || !config.smtpPass || !config.contactToEmail) {
+    const smtpHost = config.smtpHost?.trim()
+    const smtpUser = config.smtpUser?.trim()
+    const smtpPass = config.smtpPass?.trim()
+    const contactToEmail = config.contactToEmail?.trim()
+    const contactFromEmail = config.contactFromEmail?.trim()
+
+    if (!smtpHost || !smtpUser || !smtpPass || !contactToEmail) {
         throw createError({ statusCode: 500, statusMessage: 'Email is not configured on the server yet.' })
     }
 
     const transporter = nodemailer.createTransport({
-        host: config.smtpHost,
+        host: smtpHost,
         port: Number(config.smtpPort) || 587,
         secure: Number(config.smtpPort) === 465,
         auth: {
-            user: config.smtpUser,
-            pass: config.smtpPass
+            user: smtpUser,
+            pass: smtpPass
         }
     })
 
     const services = Array.isArray(body.services) ? body.services.filter(isNonEmptyString) : []
 
-    const fromEmail = config.contactFromEmail || config.contactToEmail
+    const fromEmail = contactFromEmail || contactToEmail
 
     await transporter.sendMail({
         from: `"Cherry Website" <${fromEmail}>`,
-        to: config.contactToEmail,
+        to: contactToEmail,
         replyTo: body.email.trim(),
         subject: `New inquiry from ${body.name.trim()}`,
         text: [
