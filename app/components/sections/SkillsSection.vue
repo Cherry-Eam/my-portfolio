@@ -86,7 +86,7 @@ const props = withDefaults(defineProps<Props>(), {
     groups: () => [
         { category: 'Productivity', items: ['Google Workspace', 'Microsoft Office', 'Slack', 'Zoom', 'Calendly'] },
         { category: 'AI & Automation', items: ['ChatGPT', 'Claude AI', 'GoHighLevel'] },
-        { category: 'Design & Video', items: ['Canva Pro', 'CapCut', 'Adobe Premiere Pro', 'Adobe Photoshop', 'Adobe Illustrator'] },
+        { category: 'Design & Video', items: ['Canva Pro', 'CapCut', 'Adobe Photoshop'] },
         { category: 'Marketing & Finance', items: ['Google Analytics', 'Meta Ads Manager', 'Meta Business Suite', 'QuickBooks', 'Mailchimp'] }
     ]
 })
