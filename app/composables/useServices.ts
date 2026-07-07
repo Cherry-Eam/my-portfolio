@@ -120,7 +120,7 @@ export const useServices = (): ServiceItem[] => [
         title: 'Video Editing & Graphic Design',
         slug: 'video-editing-graphic-design',
         tagline: 'I create professional visual content that helps brands communicate effectively across social media, websites, advertisements, and marketing campaigns.',
-        items: ['Short-form Videos', 'Reels & TikTok Videos', 'YouTube Shorts', 'Promotional Videos', 'Motion Graphics', 'Social Media Posts', 'Banners & Flyers', 'Presentations & Pitch Decks', 'Brand Templates', 'Infographics'],
+        items: ['Short-form Videos', 'Reels & TikTok Videos', 'YouTube Shorts', 'Promotional Videos', 'Static post & Carousel', 'Social Media Posts', 'Banners & Flyers', 'Presentations & Pitch Decks', 'Brand Templates', 'Infographics'],
         tools: ['Canva Pro', 'CapCut', 'Adobe Photoshop'],
         caseStudy: {
             title: 'Developed Consistent Visual Branding',
