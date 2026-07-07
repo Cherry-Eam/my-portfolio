@@ -67,7 +67,68 @@
                     </div>
                 </div>
 
-                <div>
+                <div v-if='service.portfolioCategories?.length'>
+                    <SectionEyebrow label='Portfolio' />
+
+                    <div class='mt-5 inline-flex rounded-full border border-cherry-petal bg-cherry-blossom/40 p-1' role='tablist' aria-label='Portfolio categories'>
+                        <button
+                            v-for='(category, index) in service.portfolioCategories'
+                            :key='category.label'
+                            type='button'
+                            role='tab'
+                            :aria-selected='index === activePortfolioIndex'
+                            class='rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200'
+                            :class="index === activePortfolioIndex
+                                ? 'bg-cherry-red text-white shadow-sm'
+                                : 'text-slate-600 hover:text-cherry-red'"
+                            @click='activePortfolioIndex = index'
+                        >
+                            {{ category.label }}
+                        </button>
+                    </div>
+
+                    <div class='mt-5 grid gap-4 sm:grid-cols-3'>
+                        <div
+                            v-for='sample in activePortfolioCategory?.samples'
+                            :key='sample.src'
+                            class='overflow-hidden rounded-2xl border border-cherry-petal bg-cherry-blossom/20'
+                        >
+                            <iframe
+                                v-if="sample.type === 'embed'"
+                                :src='sample.src'
+                                :title='sample.title'
+                                class='aspect-[4/3] h-full w-full'
+                                loading='lazy'
+                                allow='fullscreen'
+                                allowfullscreen
+                                frameborder='0'
+                            />
+                            <video
+                                v-else-if="sample.type === 'video'"
+                                :src='encodeURI(sample.src)'
+                                class='aspect-[4/3] h-full w-full object-cover'
+                                controls
+                                preload='metadata'
+                            />
+                            <button
+                                v-else
+                                type='button'
+                                class='block aspect-[4/3] h-full w-full cursor-zoom-in'
+                                :aria-label="`Preview ${sample.title}`"
+                                @click='lightboxImage = encodeURI(sample.src)'
+                            >
+                                <img
+                                    :src='encodeURI(sample.src)'
+                                    :alt='sample.title'
+                                    class='h-full w-full object-cover transition-transform duration-300 hover:scale-105'
+                                    loading='lazy'
+                                >
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-else>
                     <div class='flex items-baseline justify-between gap-4'>
                         <SectionEyebrow label='Portfolio' />
                         <span class='font-mono text-xs uppercase tracking-widest text-slate-400'>Samples coming soon</span>
@@ -104,11 +165,47 @@
         <p class='font-display text-2xl font-semibold text-slate-950'>Service not found</p>
         <NuxtLink to='/#services' class='text-sm font-semibold text-cherry-red'>Back to Services</NuxtLink>
     </div>
+
+    <Teleport to='body'>
+        <AnimatePresence>
+            <Motion
+                v-if='lightboxImage'
+                as='div'
+                :initial="{ opacity: 0 }"
+                :animate="{ opacity: 1 }"
+                :exit="{ opacity: 0 }"
+                :transition="{ duration: 0.2, ease: 'easeOut' }"
+                class='fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-6'
+                @click='lightboxImage = null'
+            >
+                <Motion
+                    as='div'
+                    :initial="{ opacity: 0, scale: 0.95 }"
+                    :animate="{ opacity: 1, scale: 1 }"
+                    :exit="{ opacity: 0, scale: 0.95 }"
+                    :transition="{ duration: 0.2, ease: 'easeOut' }"
+                    class='relative max-h-full max-w-3xl'
+                    @click.stop
+                >
+                    <button
+                        type='button'
+                        class='absolute -top-11 right-0 rounded-full p-2 text-white hover:text-cherry-petal'
+                        aria-label='Close preview'
+                        @click='lightboxImage = null'
+                    >
+                        <XMarkIcon class='h-6 w-6' aria-hidden='true' />
+                    </button>
+                    <img :src='lightboxImage' alt='' class='max-h-[80vh] w-full rounded-2xl object-contain'>
+                </Motion>
+            </Motion>
+        </AnimatePresence>
+    </Teleport>
 </template>
 
 <script setup lang='ts'>
-import { computed } from 'vue'
-import { ArrowLeftIcon, ArrowRightIcon, CheckCircleIcon, PhotoIcon } from '@heroicons/vue/24/outline'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { Motion, AnimatePresence } from 'motion-v'
+import { ArrowLeftIcon, ArrowRightIcon, CheckCircleIcon, PhotoIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import SectionEyebrow from '~/components/ui/SectionEyebrow.vue'
 import { useServices, serviceIcons } from '~/composables/useServices'
 
@@ -118,4 +215,18 @@ const services = useServices()
 const serviceIndex = computed(() => services.findIndex((item) => item.slug === route.params.slug))
 const service = computed(() => (serviceIndex.value === -1 ? null : services[serviceIndex.value]))
 const icon = computed(() => serviceIcons[serviceIndex.value % serviceIcons.length])
+
+const activePortfolioIndex = ref(0)
+const activePortfolioCategory = computed(() => service.value?.portfolioCategories?.[activePortfolioIndex.value])
+
+const lightboxImage = ref<string | null>(null)
+
+const closeLightboxOnEscape = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape') {
+        lightboxImage.value = null
+    }
+}
+
+onMounted(() => window.addEventListener('keydown', closeLightboxOnEscape))
+onBeforeUnmount(() => window.removeEventListener('keydown', closeLightboxOnEscape))
 </script>

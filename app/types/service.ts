@@ -5,6 +5,17 @@ export interface ServiceCaseStudy {
     results: string[]
 }
 
+export interface PortfolioSample {
+    title: string
+    type: 'image' | 'video' | 'embed'
+    src: string
+}
+
+export interface PortfolioCategory {
+    label: string
+    samples: PortfolioSample[]
+}
+
 export interface ServiceItem {
     title: string
     slug: string
@@ -12,4 +23,5 @@ export interface ServiceItem {
     items: string[]
     tools?: string[]
     caseStudy?: ServiceCaseStudy
+    portfolioCategories?: PortfolioCategory[]
 }

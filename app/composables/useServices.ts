@@ -9,7 +9,33 @@ import {
     EnvelopeIcon,
     PencilSquareIcon
 } from '@heroicons/vue/24/outline'
-import type { ServiceItem } from '~/types/service'
+import type { ServiceItem, PortfolioCategory } from '~/types/service'
+
+const portfolioBasePath = '/img/project/Video Editing & Graphics Design'
+
+const videoEditingPortfolio: PortfolioCategory = {
+    label: 'Video Editing',
+    samples: [
+        { title: 'Video Edit 1', type: 'embed', src: 'https://www.youtube.com/embed/PwxnS3auerw' },
+        { title: 'Video Edit 2', type: 'embed', src: 'https://www.youtube.com/embed/npbpY7cf4Z8' },
+        { title: 'Video Edit 3', type: 'embed', src: 'https://www.youtube.com/embed/m8aTPOdcO9E' },
+        { title: 'Video Edit 4', type: 'embed', src: 'https://www.youtube.com/embed/ENF19k08uk4' },
+        { title: 'Video Edit 5', type: 'embed', src: 'https://www.youtube.com/embed/RZXISI3PnzE' },
+        { title: 'Video Edit 6', type: 'embed', src: 'https://www.youtube.com/embed/KwSzvBmMGGo' }
+    ]
+}
+
+const graphicDesignPortfolio: PortfolioCategory = {
+    label: 'Graphic Design',
+    samples: [
+        { title: 'Graphic Design 1', type: 'image', src: `${portfolioBasePath}/GRAPHIC DESIGN/11eda5099d22f51e2d4a216cad49b0ec.jpeg` },
+        { title: 'Graphic Design 2', type: 'image', src: `${portfolioBasePath}/GRAPHIC DESIGN/2039e97c8254295c60daa14f3cdc344a.jpeg` },
+        { title: 'Graphic Design 3', type: 'image', src: `${portfolioBasePath}/GRAPHIC DESIGN/IMG_5265.JPG` },
+        { title: 'Graphic Design 4', type: 'image', src: `${portfolioBasePath}/GRAPHIC DESIGN/att.YwbY9Gyx527tTquE1odm_7CruXcyAKoDF5UTbhE1q18.jpg` },
+        { title: 'Graphic Design 5', type: 'image', src: `${portfolioBasePath}/GRAPHIC DESIGN/b109e52c12392653f443104b405eb06f.jpeg` },
+        { title: 'Graphic Design 6', type: 'image', src: `${portfolioBasePath}/GRAPHIC DESIGN/da70102abe22df2308b3ddddbcf67273.jpeg` }
+    ]
+}
 
 export const useServices = (): ServiceItem[] => [
     {
@@ -101,7 +127,8 @@ export const useServices = (): ServiceItem[] => [
             challenge: 'The client lacked cohesive branding across marketing materials.',
             solution: 'Created branded templates, edited promotional videos, and designed consistent social media graphics.',
             results: ['Stronger brand recognition', 'Professional visual identity', 'Faster content production', 'Consistent marketing materials']
-        }
+        },
+        portfolioCategories: [videoEditingPortfolio, graphicDesignPortfolio]
     },
     {
         title: 'Email Marketing & Newsletter',
